@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stylish Stopwatch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .stopwatch {
+        background-color: #333;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        text-align: center;
+      }
+      .display {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      .controls button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stopwatch">
+      <div class="display">00:00:00</div>
+      <div class="controls">
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Reset</button>
+      </div>
+    </div>
+
+    <script>
+      let timer;
+      let time = 0;
+      let running = false;
+
+      function start() {
+        if (!running) {
+          running = true;
+          timer = setInterval(update, 10);
+        }
+      }
+
+      function stop() {
+        running = false;
+        clearInterval(timer);
+      }
+
+      function reset() {
+        stop();
+        time = 0;
+        updateDisplay();
+      }
+
+      function update() {
+        time += 10;
+        updateDisplay();
+      }
+
+      function updateDisplay() {
+        let milliseconds = time % 1000;
+        let seconds = Math.floor((time / 1000) % 60);
+        let minutes = Math.floor((time / (1000 * 60)) % 60);
+        let hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+
+        milliseconds = (milliseconds < 100 ? "0" : "") + milliseconds;
+        seconds = (seconds < 10 ? "0" : "") + seconds;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+        hours = (hours < 10 ? "0" : "") + hours;
+
+        document.querySelector(".display").textContent =
+          hours + ":" + minutes + ":" + seconds;
+      }
+    </script>
+  </body>
+</html>
